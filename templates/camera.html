@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ambil Gambar dari Kamera</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7f7f7;
+            text-align: center;
+            padding: 20px;
+        }
+
+        video, canvas, img {
+            border: 2px solid #205c20;
+            border-radius: 8px;
+            width: 60%;
+            max-width: 600px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #205c20;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #174a17;
+        }
+
+        a {
+            display: block;
+            margin-top: 30px;
+            color: #205c20;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ambil Gambar dari Kamera</h1>
+    <video id="video" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <img id="result-image" style="display: none;" alt="Gambar dari Kamera"/>
+
+    <div class="controls">
+        <button onclick="takeSnapshot()">Ambil Gambar</button>
+        <a href="{{ url_for('upload') }}">Kembali ke Upload</a>
+    </div>
+
+    <script>
+        const cameraUrl = "{{ url_for('camera') }}";
+
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert('Tidak dapat mengakses kamera: ' + err);
+            });
+
+        function takeSnapshot() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/png');
+
+            fetch(cameraUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ image: imageData })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Gagal dari server');
+                return response.json();
+            })
+            .then(data => {
+                alert('Prediksi: ' + data.predicted_class + ' (Confidence: ' + (data.confidence * 100).toFixed(2) + '%)');
+                const resultImg = document.getElementById('result-image');
+                resultImg.src = data.debug_image_url;
+                resultImg.style.display = 'block';
+            })
+            .catch(error => {
+                alert('Gagal mengirim gambar: ' + error);
+            });
+        }
+    </script>
+</body>
+</html>

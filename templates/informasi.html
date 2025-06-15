@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Informasi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .content {
+      text-align: justify;
+      line-height: 1.8;
+      font-size: 16px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="container header-container">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='usu-logo.png') }}" alt="Logo USU">
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('tutorial') }}">Tutorial</a></li>
+            <li><a href="{{ url_for('informasi') }}">Informasi</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="content container">
+      <h1>Informasi tentang Sistem Identifikasi Kualitas Biji Kopi</h1>
+      <p>
+        Sistem ini merupakan solusi inovatif berbasis kecerdasan buatan yang dirancang untuk membantu pelaku industri kopi dalam mengidentifikasi kualitas biji kopi hijau secara otomatis dan akurat.
+        Menggunakan kombinasi <strong>Convolutional Neural Networks (CNN) VGG19</strong> dan <strong>Random Forest</strong>, sistem ini mampu mengekstraksi fitur visual seperti bentuk, tekstur, dan warna dari citra biji kopi,
+        kemudian mengklasifikasikannya ke dalam empat kategori mutu: <em>premium</em>, <em>long berry</em>, <em>peaberry</em>, dan <em>bad beans</em>.
+      </p>
+      <p>
+        Keunggulan utama sistem ini adalah kemampuannya untuk bekerja secara <strong>real-time</strong> menggunakan kamera perangkat pengguna, tanpa memerlukan latar belakang netral atau pencahayaan yang dikendalikan.
+        Dengan pendekatan ini, sistem tetap memberikan hasil klasifikasi yang andal dan konsisten, bahkan dalam kondisi lingkungan yang bervariasi.
+      </p>
+      <p>
+        Platform ini dikembangkan dalam bentuk aplikasi web responsif yang dapat diakses dengan mudah oleh berbagai kalangan, mulai dari petani, pengepul, hingga eksportir.
+        Selain meningkatkan efisiensi proses sortasi, sistem ini juga mendukung transformasi digital dalam sektor pertanian dan industri kopi nasional.
+      </p>
+      <p>
+        Melalui integrasi teknologi <strong>deep learning</strong> dan <strong>machine learning</strong>, sistem ini tidak hanya memberikan hasil yang presisi tinggi,
+        tetapi juga dapat diperluas untuk diterapkan pada komoditas agrikultur lainnya di masa depan.
+      </p>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2025 Universitas Sumatera Utara | Sistem Identifikasi Kualitas Kopi</p>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
